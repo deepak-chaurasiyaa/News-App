@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+</head>
+<body>
+    <div id="back">
+        <button class="close-button " style="top: 15px;">
+            <div class="icon-wrap "></div><svg class="icon icon--close icon--green-gradient" viewBox="0 0 20 20"
+                version="1.1" aria-labelledby="title">
+                <title>Close Screen</title>
+                <path
+                    d="M0,2.9h2.9V0H0V2.9z M2.9,5.7h2.9V2.9H2.9V5.7z M5.7,8.6h2.9V5.7H5.7V8.6z M8.6,11.4h2.9V8.6H8.6V11.4z M5.7,14.3h2.9v-2.9H5.7V14.3z M2.9,17.1h2.9v-2.9H2.9V17.1z M0,20h2.9v-2.9H0V20z M11.4,14.3h2.9v-2.9h-2.9V14.3z M14.3,17.1h2.9v-2.9h-2.9V17.1zM17.1,20H20v-2.9h-2.9V20z M11.4,8.6h2.9V5.7h-2.9V8.6z M14.3,5.7h2.9V2.9h-2.9V5.7z M17.1,2.9H20V0h-2.9V2.9z">
+                </path>
+            </svg>
+        </button>
+    </div>
+    <div id="sid"></div>
+    <div id="watchx"></div>
+</body>
+</html>
+<script type="module">
+    import sidebar from "./components/sidebar.js"
+
+        let sid = document.getElementById('sid');
+        sid.innerHTML = sidebar();
+
+        let data = JSON.parse(localStorage.getItem('news'));
+
+        let watchnews = document.getElementById('watchx');
+
+        let titl = document.createElement('div');
+        titl.id = "titl";
+       let hx = document.createElement('h2')
+       hx.innerHTML = data.title;
+
+       let div = document.createElement('div');
+       div.id = "autpub";
+        let aut = document.createElement('p');
+            aut.innerHTML = `Author @ ${data.author},`
+         let pub = document.createElement('p');
+            pub.innerHTML = `Published at - ${data.published_at}.`
+
+        let img = document.createElement('img');
+        img.src = data.image;
+        div.append(aut,pub)
+
+       let description = document.createElement('h3');
+        description.innerHTML = data.description;
+ 
+       titl.append(hx,div,img,description);
+       watchnews.append(titl)
+
+let back = document.getElementById('back');
+back.addEventListener('click',function(){
+    window.location.href = "index.html"
+})
+      
+
+</script>

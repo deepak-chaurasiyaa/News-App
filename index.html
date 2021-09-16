@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+</head>
+<body>
+    <div id="searchbox"></div>
+    <div id="nav">
+        <input type="text" placeholder="Search News" class="input" id="input">
+        <button class="submit" id="submi">Search</button>
+    </div>
+    <div class="drop"></div>
+    <div id="sid"></div>
+</body>
+</html>
+
+<script type="module">
+    import sidebar from "./components/sidebar.js"
+
+    let sid = document.getElementById('sid');
+    sid.innerHTML = sidebar();
+    async function getData(url) {
+            try {
+                let res = await fetch(url);
+                let data = await res.json();
+                return data.data;
+            } catch (err) {
+                console.log(err);
+            }
+        }
+       let submi = document.getElementById('submi');
+       
+       submi.addEventListener('click',function(){
+            setTimeout(() => {
+                hellor2();
+            }, 50);
+       })
+
+        function appendData(abc, random) {
+            try {
+                abc.forEach((res) => {
+                    let main_div = document.createElement("div");
+                    main_div.id = "mainnews";
+
+                    let div1 = document.createElement("div");
+                    let h2 = document.createElement("h2");
+                    h2.innerHTML = res.title;
+                    
+                    let p2 = document.createElement('div');
+                    p2.innerHTML = res.published_at
+                    div1.append(h2,p2);
+
+                    let div2 = document.createElement("div");
+                    let h3 = document.createElement("h3");
+                    h3.innerHTML = res.description;
+                    div2.append(h3);
+
+                    let div3 = document.createElement("div");
+                    let img = document.createElement("img");
+                    img.src = res.image;
+                    div3.append(img);
+
+                    main_div.append(div1, div2, div3);
+                    main_div.addEventListener("click", function () {
+                        localStorage.setItem("news", JSON.stringify(res));
+                        window.location.href = "news.html";
+                    });
+                    random.append(main_div);
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        }
+            
+
+        // let response = getData(`https://newsapi.org/v2/everything?q=international&from=2021-08-14&sortBy=publishedAt&apiKey=a1fef2fc796543abb8e7d2d4e3d5cb8a&language=en&maxResults=50`)
+        let hellor = ()=>{
+            let response = getData('http://api.mediastack.com/v1/news?access_key=c3c1813153dd5043c39360d4a504d557&keywords=trending&sources=en')
+            response.then((data) => {
+                let appender = document.getElementById('append');
+                appendData(data, appender)
+            })
+        }
+    hellor();
+
+     let hellor2 = () => {
+            let news = document.getElementById('input').value;
+            if(news.length <= 2){
+                alert('Type Correct Keywords')
+                return
+            }
+            let response = getData(`http://api.mediastack.com/v1/news?access_key=c3c1813153dd5043c39360d4a504d557&keywords=${news}&sources=en`)
+            response.then((data) => {
+                let appender = document.getElementById('append');
+                appendData2(data, appender)
+            })
+        }
+     function appendData2(abc, random) {
+         random.innerHTML = null;
+            try {
+                abc.forEach((res) => {
+                    let main_div = document.createElement("div");
+                    main_div.id = "mainnews";
+
+                    let div1 = document.createElement("div");
+                    let h2 = document.createElement("h2");
+                    h2.innerHTML = res.title;
+
+                    let p2 = document.createElement('div');
+                    p2.innerHTML = res.published_at
+                    div1.append(h2, p2);
+
+                    let div2 = document.createElement("div");
+                    let h3 = document.createElement("h3");
+                    h3.innerHTML = res.description;
+                    div2.append(h3);
+
+                    let div3 = document.createElement("div");
+                    let img = document.createElement("img");
+                    img.src = res.image;
+                    div3.append(img);
+
+                    main_div.append(div1, div2, div3);
+                    main_div.addEventListener("click", function () {
+                        localStorage.setItem("news", JSON.stringify(res));
+                        window.location.href = "news.html";
+                    });
+                    random.append(main_div);
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        var timerId;
+        let inper = document.getElementById('input');
+        inper.addEventListener('keypress',function(){
+            if(timerId){
+                clearTimeout(timerId)
+            }
+               timerId = setTimeout(() => {
+                    typing(); 
+                }, 800);           
+        })
+
+        function typing(){
+
+            let inper = document.getElementById('input').value
+            console.log(inper)
+            let response = getData(`http://api.mediastack.com/v1/news?access_key=c3c1813153dd5043c39360d4a504d557&keywords=${inper}&sources=en`)
+            response.then((data) => {
+                console.log("data",data)
+                if(data.length == 0){
+                    return;
+                }
+                let appender = document.getElementById('searchbox');
+                appendData3(data, appender)
+            })
+        }
+
+        function appendData3(data,appender){
+            try{
+
+                var over = document.createElement('div')
+                over.id = "over"
+                data.forEach((el)=>{
+                    let css = document.createElement('div')
+                    let px = document.createElement('p');
+                    px.innerHTML = el.title;
+                    
+                    css.append(px)
+                    css.addEventListener("click", function () {
+                        localStorage.setItem("news", JSON.stringify(el));
+                        window.location.href = "news.html";
+                    });
+                     over.append(css)
+                })
+                let appender = document.getElementById('searchbox');
+                appender.innerHTML = null
+                appender.append(over)
+
+                let ove = document.getElementById('over');
+                if(ove.innerHTML != null){
+                     let appender = document.getElementById('searchbox');
+                     appender.style.visibility = "visible";
+                    
+                }
+            }
+            catch(err){
+                console.log(err)
+            };
+        }
+</script>
