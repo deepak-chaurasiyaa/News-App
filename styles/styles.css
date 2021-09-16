@@ -14,10 +14,15 @@
   margin-top: 8px;
   border: none;
   border-radius: 10px;
+  outline: none;
+  border: none;
 }
 .submit {
   height: 35px;
   border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  border: none;
 }
 #sidebar {
   width: 20%;

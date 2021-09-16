@@ -89,10 +89,15 @@
 
      let hellor2 = () => {
             let news = document.getElementById('input').value;
+
             if(news.length <= 2){
                 alert('Type Correct Keywords')
                 return
             }
+            let searchbox = document.getElementById('searchbox');
+            searchbox.style.visibility = "hidden"
+            let inp = document.getElementById('input');
+            inp.value = null
             let response = getData(`http://api.mediastack.com/v1/news?access_key=c3c1813153dd5043c39360d4a504d557&keywords=${news}&sources=en`)
             response.then((data) => {
                 let appender = document.getElementById('append');
