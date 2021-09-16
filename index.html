@@ -9,8 +9,16 @@
 </head>
 <body>
     <div id="searchbox"></div>
+    <div id="loger">
+        <h1>Login</h1>
+        <input type="text" name="" id="username" placeholder="Enter User Name / Mobile">
+        <div><input type="password" name="" id="password" placeholder="Enter Password"></div>
+        <button id="submit">Submit</button>
+    </div>
     <div id="nav">
         <input type="text" placeholder="Search News" class="input" id="input">
+        <img id="clear"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQuiC2Y74m6uMbD5bohNYTMxcT1zBoZuoa_Q&usqp=CAU" alt="">
         <button class="submit" id="submi">Search</button>
     </div>
     <div class="drop"></div>
@@ -50,7 +58,10 @@
                     let h2 = document.createElement("h2");
                     h2.innerHTML = res.title;
                     
-                    let p2 = document.createElement('div');
+                    let pf = document.createElement('h5');
+                    pf.innerHTML = res.published_at
+
+                    let p2 = document.createElement('h4');
                     p2.innerHTML = res.published_at
                     div1.append(h2,p2);
 
@@ -75,8 +86,30 @@
                 console.log(err);
             }
         }
-            
-
+        
+        let loging = document.getElementById('loging');
+        loging.addEventListener('click',()=>{
+             let user = document.getElementById('username');
+            let pass = document.getElementById('password');
+            user.value = null;
+            pass.value = null;
+            let loger = document.getElementById('loger');
+            loger.style.visibility="visible"
+            //alert('Hello')
+            let newsbar = document.getElementById('newsbar')
+            newsbar.addEventListener('click',()=>{
+                loger.style.visibility = "hidden"
+                return;
+            })
+           
+        })
+        let clear = document.getElementById('clear');
+        clear.addEventListener('click',()=>{
+            let input = document.getElementById('input');
+            input.value=null;
+             let searchbox = document.getElementById('searchbox');
+            searchbox.style.visibility = "hidden"
+        })
         // let response = getData(`https://newsapi.org/v2/everything?q=international&from=2021-08-14&sortBy=publishedAt&apiKey=a1fef2fc796543abb8e7d2d4e3d5cb8a&language=en&maxResults=50`)
         let hellor = ()=>{
             let response = getData('http://api.mediastack.com/v1/news?access_key=c3c1813153dd5043c39360d4a504d557&keywords=trending&sources=en')
@@ -198,4 +231,20 @@
                 console.log(err)
             };
         }
+
+        let submit = document.getElementById('submit')
+        submit.addEventListener('click',()=>{
+            let user = document.getElementById('username').value;
+            let pass = document.getElementById('password').value;
+
+            if(user.length > 2 && pass.length > 2){
+                let loger = document.getElementById('loger');
+                loger.style.visibility = "hidden"
+                alert("Login Successful!")
+               
+            }
+            else{
+                alert("Please Provide Correct Details")
+            }
+        })
 </script>
