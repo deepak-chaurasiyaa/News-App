@@ -10,6 +10,7 @@
 <body>
     <div id="searchbox"></div>
     <div id="loger">
+        <h2 id="ex">X</h2>
         <h1>Login</h1>
         <input type="text" name="" id="username" placeholder="Enter User Name / Mobile">
         <div><input type="password" name="" id="password" placeholder="Enter Password"></div>
@@ -72,7 +73,12 @@
 
                     let div3 = document.createElement("div");
                     let img = document.createElement("img");
-                    img.src = res.image;
+                    if(res.image == null){
+                        img.src = "https://cdn1.img.sputniknews.com/images/104791/12/1047911266.jpg"
+                    }
+                    else{
+                        img.src = res.image;
+                    }
                     div3.append(img);
 
                     main_div.append(div1, div2, div3);
@@ -247,4 +253,10 @@
                 alert("Please Provide Correct Details")
             }
         })
+        let ex = document.getElementById('ex');
+        ex.addEventListener('click',function(){
+            let loger = document.getElementById('loger');
+            loger.style.visibility = "hidden"
+        })
+
 </script>

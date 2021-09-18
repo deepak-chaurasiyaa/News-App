@@ -104,7 +104,7 @@
 }
 #mainnews:hover {
   cursor: pointer;
-  background-color: rgb(247, 244, 244);
+  background-color: rgb(233, 232, 232);
 }
 
 #watchx {
@@ -178,6 +178,17 @@
   top: 48%;
   left: 26%;
   visibility: hidden;
+}
+#ex {
+  float: right;
+  color: white;
+  padding-right: 5px;
+  margin-top: -1px;
+  padding: 5px;
+}
+#ex:hover {
+  cursor: pointer;
+  color: yellow;
 }
 #username,
 #password {
